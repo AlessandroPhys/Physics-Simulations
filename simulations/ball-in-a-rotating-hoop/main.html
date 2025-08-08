@@ -1,7 +1,10 @@
-<div id="glowscript" class="glowscript">
+<div class="glowscript-container">
+   <div id="glowscript" class="glowscript">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" href="styles.css" rel="stylesheet" />
 <link type="text/css" href="https://www.glowscript.org/css/redmond/2.1/jquery-ui.custom.css" rel="stylesheet" />
 <link type="text/css" href="https://www.glowscript.org/css/ide.css" rel="stylesheet" />
+
 <script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery-ui.custom.min.js"></script>
 <script type="text/javascript" src="https://www.glowscript.org/package/glow.3.2.min.js"></script>
@@ -11,6 +14,7 @@
 // START JAVASCRIPT
 ;(function() {;
 var ρσ_modules = {};
+var run, t, theta, omega_theta, omega_aro, t_max;
 ρσ_modules.pythonize = {};
 
 (function(){
@@ -52,7 +56,7 @@ async function __main__() {
 
     function round(num, n=0) {return Number(num.toFixed(n))}
 
-    var version, print, arange, __name__, type, ρσ_ls, a, g, dt, t_max, theta_0, omega_theta_0, theta, omega_theta, t, omega_aro, alpha_aro, scene, aro, aro_initial_axis, aro_initial_up, bolita, trail, alpha, phi, x_local, y_local, z_local, x, y, z, pos;
+    var version, print, arange, __name__, type, ρσ_ls, angle, r, new_axis, a, g, dt, s_theta, s_omega_theta, s_omega_aro, s_tmax, theta_label, omega_theta_label, omega_aro_label, tmax_label, run, t, theta, omega_theta, omega_aro, t_max, aro, aro_initial_axis, aro_initial_up, bolita, alpha_aro, alpha, phi, x_local, y_local, z_local, x, y, z, pos;
     version = ρσ_list_decorate([ "3.2", "glowscript" ]);
     Array.prototype['+'] = function(r) {return this.concat(r)}
     Array.prototype['*'] = function(r) {return __array_times_number(this, r)}
@@ -64,103 +68,258 @@ async function __main__() {
     var strings = ρσ_modules.pythonize.strings;
 
     strings();
-    "2";
-    a = 1;
-    "3";
-    g = 9.81;
-    "4";
-    dt = .001;
     "5";
-    t_max = 50;
+    scene.title = "Bolita en aro girando a velocidad constante z\nAjustar parámetros y presionar 'Iniciar Simulación'";
+    "6";
+    scene.width = 850;
     "7";
-    theta_0 = pi["/"](2);
+    scene.height = 680;
     "8";
-    omega_theta_0 = 0;
+    scene.background = color.black["*"](.9);
+    "9";
+    scene.userzoom = false;
+    "10";
+    scene.userspin = false;
     "11";
-    theta = theta_0;
+    scene.userpan = false;
+    (await sleep(.1));
     "12";
-    omega_theta = omega_theta_0;
-    "13";
-    t = 0;
-    "16";
-    omega_aro = .5;
-    "17";
-    alpha_aro = 0;
+    scene.autoscale = false;
+    "14";
+    angle = (await radians(45));
+    "15";
+    r = 2.2;
     "18";
-    scene = ρσ_interpolate_kwargs.call(this, canvas, [ρσ_desugar_kwargs({title: "Bolita en aro vertical girando sobre eje z", width: 800, height: 600})]);
+    new_axis = vector(1["-u"]()["*"](r)["*"](sin(angle)), 1["-u"]()["*"](r)["*"](cos(angle)), 1["-u"]()["*"](r)["*"](.5)["*"](cos(angle)));
     "19";
-    scene.background = color.cyan["*"](.9);
+    scene.camera.pos = vector(0, 2.5, 0);
     "20";
-    scene.camera.pos = vector(0, 3, 0);
+    scene.camera.axis = new_axis;
     "21";
-    scene.camera.axis = vector(0, 1["-u"]()["*"](3), 0);
+    scene.up = vector(0, 0, 1.5);
     "22";
-    scene.up = vector(0, 0, 1);
+    scene.center = vector(0, 0, 0);
     "24";
-    aro = ρσ_interpolate_kwargs.call(this, ring, [ρσ_desugar_kwargs({pos: vector(0, 0, 0), axis: vector(0, 1, 0), radius: a, thickness: .02, color: color.white})]);
+    a = 1;
     "25";
-    aro_initial_axis = aro.axis;
+    g = 9.81;
     "26";
-    aro_initial_up = scene.up;
-    "28";
-    bolita = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({radius: .06, color: color.red})]);
+    dt = .001;
     "29";
-    trail = ρσ_interpolate_kwargs.call(this, curve, [ρσ_desugar_kwargs({color: color.red, radius: .005})]);
-    "31";
-    while (true) {
-        "32";
-        (await rate(1e3));
+    async function dummy(val) {
+    };
+    if (!dummy.__argnames__) Object.defineProperties(dummy, {
+        __argnames__ : {value: ["val"]},
+        __module__ : {value: null}
+    });
+
+    "32";
+    async function vista_superior(b) {
+        "33";
+        scene.camera.pos = vector(0, 0, 2);
+        "34";
+        scene.camera.axis = vector(0, 0, 1["-u"]()["*"](6.5));
         "35";
-        omega_aro=omega_aro["+"](alpha_aro["*"](dt));
-        "37";
-        if (omega_aro["<"](0)) {
-            "38";
-            omega_aro = 0;
-        }
+        scene.up = vector(0, 1, 0);
+    };
+    if (!vista_superior.__argnames__) Object.defineProperties(vista_superior, {
+        __argnames__ : {value: ["b"]},
+        __module__ : {value: null}
+    });
+
+    "37";
+    async function vista_frontal(b) {
+        "38";
+        scene.camera.pos = vector(0, 2.5, 0);
+        "39";
+        scene.camera.axis = vector(0, 1["-u"]()["*"](6.5), 0);
         "40";
-        alpha = sin(theta)["*"](Math.pow(omega_aro, 2)["*"](cos(theta))["-"](1["*"](g)["/"](a)));
-        "41";
-        omega_theta=omega_theta["+"](alpha["*"](dt));
-        "42";
-        theta=theta["+"](omega_theta["*"](dt));
+        scene.up = vector(0, 0, 1);
+    };
+    if (!vista_frontal.__argnames__) Object.defineProperties(vista_frontal, {
+        __argnames__ : {value: ["b"]},
+        __module__ : {value: null}
+    });
+
+    "42";
+    async function vista_cenital(b) {
+        var ρσ_ls, angle, r, new_axis;
         "43";
-        phi = omega_aro["*"](t);
-        "45";
-        x_local = a["*"](sin(theta));
-        "46";
-        y_local = 0;
+        angle = (await radians(45));
+        "44";
+        r = 2.2;
         "47";
-        z_local = 1["-u"]()["*"](a)["*"](cos(theta));
+        new_axis = vector(1["-u"]()["*"](r)["*"](sin(angle)), 1["-u"]()["*"](r)["*"](cos(angle)), 1["-u"]()["*"](r)["*"](.5)["*"](cos(angle)));
+        "48";
+        scene.camera.pos = vector(0, 2.5, 0);
         "49";
-        x = x_local["*"](cos(phi));
+        scene.camera.axis = new_axis;
         "50";
-        y = x_local["*"](sin(phi));
+        scene.up = vector(0, 0, 1.5);
         "51";
-        z = z_local;
-        "53";
-        pos = vector(x, y, z);
-        "54";
-        bolita.pos = pos;
-        "55";
-        ρσ_interpolate_kwargs.call(trail, trail.append, [ρσ_desugar_kwargs({pos: pos})]);
-        "57";
-        ρσ_interpolate_kwargs.call(aro, aro.rotate, [ρσ_desugar_kwargs({angle: omega_aro["*"](dt), axis: vector(0, 0, 1), origin: vector(0, 0, 0)})]);
-        "58";
-        t=t["+"](dt);
-        "60";
-        if (t[">="](t_max)) {
-            "62";
-            t = 0;
-            "63";
-            theta = theta_0;
-            "64";
-            omega_theta = omega_theta_0;
-            "67";
-            aro.axis = aro_initial_axis;
-            "68";
-            scene.up = aro_initial_up;
-            "71";
-            trail.clear();
+        scene.center = vector(0, 0, 0);
+    };
+    if (!vista_cenital.__argnames__) Object.defineProperties(vista_cenital, {
+        __argnames__ : {value: ["b"]},
+        __module__ : {value: null}
+    });
+
+    "53";
+    scene.append_to_caption("     ");
+    "54";
+    ρσ_interpolate_kwargs.call(this, button, [ρσ_desugar_kwargs({text: "Vista superior", bind: vista_superior})]);
+    "55";
+    scene.append_to_caption("     ");
+    "56";
+    ρσ_interpolate_kwargs.call(this, button, [ρσ_desugar_kwargs({text: "Vista frontal", bind: vista_frontal})]);
+    "57";
+    scene.append_to_caption("     ");
+    "58";
+    ρσ_interpolate_kwargs.call(this, button, [ρσ_desugar_kwargs({text: "Vista cenital", bind: vista_cenital})]);
+    "61";
+    scene.append_to_caption("\nTheta₀ (°): ");
+    "62";
+    s_theta = ρσ_interpolate_kwargs.call(this, slider, [ρσ_desugar_kwargs({min: 0, max: 180, value: 90, step: 1, length: 300, bind: dummy})]);
+    "63";
+    scene.append_to_caption("°\n");
+    "65";
+    scene.append_to_caption("ω_theta₀: ");
+    "66";
+    s_omega_theta = ρσ_interpolate_kwargs.call(this, slider, [ρσ_desugar_kwargs({min: 1["-u"]()["*"](5), max: 5, value: 0, step: .1, length: 300, bind: dummy})]);
+    "67";
+    scene.append_to_caption(" rad/s\n");
+    "69";
+    scene.append_to_caption("ω_aro: ");
+    "70";
+    s_omega_aro = ρσ_interpolate_kwargs.call(this, slider, [ρσ_desugar_kwargs({min: 0, max: 10, value: .5, step: .1, length: 300, bind: dummy})]);
+    "71";
+    scene.append_to_caption(" rad/s\n");
+    "73";
+    scene.append_to_caption("t_max: ");
+    "74";
+    s_tmax = ρσ_interpolate_kwargs.call(this, slider, [ρσ_desugar_kwargs({min: 5, max: 50, value: 50, step: 1, length: 300, bind: dummy})]);
+    "75";
+    scene.append_to_caption(" s\n");
+    "78";
+    theta_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(1["-u"]()["*"](16), 1["-u"]()["*"](3), 1["-u"]()["*"](1)), text: "θ₀ = "["+"](ρσ_str.format("{:.1f}", s_theta.value))["+"]("°"), height: 20, box: true, color: color.white, opacity: .7})]);
+    "79";
+    omega_theta_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(1["-u"]()["*"](17), 1["-u"]()["*"](3), 1["-u"]()["*"](3)), text: "ω_θ₀ = "["+"](ρσ_str.format("{:.1f}", s_omega_theta.value))["+"](""), height: 20, box: true, color: color.white, opacity: .7})]);
+    "80";
+    omega_aro_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(1["-u"]()["*"](18), 1["-u"]()["*"](3), 1["-u"]()["*"](5)), text: "ω_aro = "["+"](ρσ_str.format("{:.1f}", s_omega_aro.value))["+"](""), height: 20, box: true, color: color.white, opacity: .7})]);
+    "81";
+    tmax_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(1["-u"]()["*"](19), 1["-u"]()["*"](3), 1["-u"]()["*"](7)), text: "t_max = "["+"](ρσ_str.format("{:.1f}", s_tmax.value))["+"](""), height: 20, box: true, color: color.white, opacity: .7})]);
+    "84";
+    run = false;
+    "85";
+    t = 0;
+    "86";
+    theta = 0;
+    "87";
+    omega_theta = 0;
+    "88";
+    omega_aro = 0;
+    "89";
+    t_max = 20;
+    "92";
+    aro = ρσ_interpolate_kwargs.call(this, ring, [ρσ_desugar_kwargs({pos: vector(0, 0, 0), axis: vector(0, 1, 0), radius: a, thickness: .02, color: color.white})]);
+    "93";
+    aro_initial_axis = aro.axis;
+    "94";
+    aro_initial_up = scene.up;
+    "96";
+    bolita = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({radius: .06, color: color.red, make_trail: true, trail_radius: .005})]);
+    "97";
+    bolita.visible = false;
+    "100";
+    async function iniciar(b) {
+        "101";
+        "103";
+        theta = (await radians(s_theta.value));
+        "104";
+        omega_theta = s_omega_theta.value;
+        "105";
+        omega_aro = s_omega_aro.value;
+        "106";
+        t_max = s_tmax.value;
+        "107";
+        t = 0;
+        "108";
+        run = true;
+        "110";
+        bolita.visible = true;
+        "111";
+        bolita.clear_trail();
+        "112";
+        aro.axis = vector(0, 1, 0);
+    };
+    if (!iniciar.__argnames__) Object.defineProperties(iniciar, {
+        __argnames__ : {value: ["b"]},
+        __module__ : {value: null}
+    });
+
+    "115";
+    scene.append_to_caption("\n");
+    "116";
+    ρσ_interpolate_kwargs.call(this, button, [ρσ_desugar_kwargs({text: "Iniciar Simulación", bind: iniciar})]);
+    "119";
+    while (true) {
+        "120";
+        (await rate(1e3));
+        "123";
+        theta_label.text = "θ₀ = "["+"](ρσ_str.format("{:.1f}", s_theta.value))["+"]("°");
+        "124";
+        omega_theta_label.text = "ω_θ₀ = "["+"](ρσ_str.format("{:.1f}", s_omega_theta.value))["+"]("");
+        "125";
+        omega_aro_label.text = "ω_aro = "["+"](ρσ_str.format("{:.1f}", s_omega_aro.value))["+"]("");
+        "126";
+        tmax_label.text = "t_max = "["+"](ρσ_str.format("{:.1f}", s_tmax.value))["+"](" s");
+        "128";
+        if (run && t["<="](t_max)) {
+            "129";
+            alpha_aro = 0;
+            "130";
+            omega_aro=omega_aro["+"](alpha_aro["*"](dt));
+            "131";
+            if (omega_aro["<"](0)) {
+                "132";
+                omega_aro = 0;
+            }
+            "134";
+            alpha = sin(theta)["*"](Math.pow(omega_aro, 2)["*"](cos(theta))["-"](1["*"](g)["/"](a)));
+            "135";
+            omega_theta=omega_theta["+"](alpha["*"](dt));
+            "136";
+            theta=theta["+"](omega_theta["*"](dt));
+            "137";
+            phi = omega_aro["*"](t);
+            "139";
+            x_local = a["*"](sin(theta));
+            "140";
+            y_local = 0;
+            "141";
+            z_local = 1["-u"]()["*"](a)["*"](cos(theta));
+            "143";
+            x = x_local["*"](cos(phi));
+            "144";
+            y = x_local["*"](sin(phi));
+            "145";
+            z = z_local;
+            "147";
+            pos = vector(x, y, z);
+            "148";
+            bolita.pos = pos;
+            "150";
+            ρσ_interpolate_kwargs.call(aro, aro.rotate, [ρσ_desugar_kwargs({angle: omega_aro["*"](dt), axis: vector(0, 0, 1), origin: vector(0, 0, 0)})]);
+            "151";
+            t=t["+"](dt);
+            "153";
+        } else if (run && t[">"](t_max)) {
+            "154";
+            run = false;
+            "155";
+            bolita.clear_trail();
+            "156";
+            bolita.visible = false;
         }
     }
 };
@@ -172,4 +331,6 @@ if (!__main__.__module__) Object.defineProperties(__main__, {
 // END JAVASCRIPT
 
 //--><!]]></script>
+</div>
+
 </div>

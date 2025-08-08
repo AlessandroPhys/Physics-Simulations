@@ -1,0 +1,13 @@
+body {
+  background-color: rgb(219, 0, 0);
+}
+
+.glowscript-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(216, 216, 216);
+    
+}
