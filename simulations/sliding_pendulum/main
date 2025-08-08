@@ -1,5 +1,6 @@
 from vpython import *
 
+
 scene.userzoom = False
 scene.userspin = False
 scene.userpan = False
