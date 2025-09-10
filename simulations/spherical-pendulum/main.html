@@ -109,7 +109,7 @@ async function __main__() {
     "35";
     pivot = vector(0, 0, 0);
     "36";
-    bob = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({radius: .06, color: color.yellow, make_trail: true, trail_color: color.yellow, trail_radius: .015, retain: 2e3})]);
+    bob = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({radius: .06, color: color.yellow, make_trail: true, trail_color: color.yellow, trail_radius: .01, retain: 2e3})]);
     "37";
     rod = ρσ_interpolate_kwargs.call(this, cylinder, [ρσ_desugar_kwargs({pos: pivot, radius: .01, color: color.white})]);
     "39";
@@ -151,7 +151,7 @@ async function __main__() {
     "63";
     async function vista_frontal(b) {
         "64";
-        scene.camera.pos = vector(0, 2, 1["-u"]()["*"](.5));
+        scene.camera.pos = vector(0, 2.5, 0);
         "65";
         scene.camera.axis = vector(0, 1["-u"]()["*"](1), 0);
         "66";
@@ -165,7 +165,7 @@ async function __main__() {
     "68";
     async function vista_cenital(b) {
         "69";
-        scene.camera.pos = vector(1.2, 1.2, 1.2);
+        scene.camera.pos = vector(1.4, 1.4, 1.4);
         "70";
         scene.camera.axis = vector(1["-u"]()["*"](1.5), 1["-u"]()["*"](1.5), 1["-u"]()["*"](1.5));
         "71";
