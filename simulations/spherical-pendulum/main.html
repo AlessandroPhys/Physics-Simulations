@@ -244,7 +244,7 @@ async function __main__() {
         "124";
         m = s_m.value;
         "127";
-        if ((abs(theta)["<"](1e-6) || abs(theta["-"](1["*"](pi)))["<"](1e-6)) && (L !== 0 && (typeof L !== "object" || ρσ_not_equals(L, 0)))) {
+        if (abs(sin(theta))["<"](1e-6) && (L !== 0 && (typeof L !== "object" || ρσ_not_equals(L, 0)))) {
             "128";
             warning_label.text = "⚠ No es posible iniciar con θ = 0 o π y L ≠ 0";
             "129";
