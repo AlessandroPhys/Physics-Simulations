@@ -1,0 +1,350 @@
+<div class="glowscript-container">
+<div id="glowscript" class="glowscript">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" href="styles.css" rel="stylesheet" />
+<link type="text/css" href="https://www.glowscript.org/css/redmond/2.1/jquery-ui.custom.css" rel="stylesheet" />
+<link type="text/css" href="https://www.glowscript.org/css/ide.css" rel="stylesheet" />
+<script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/package/glow.3.2.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/package/RSrun.3.2.min.js"></script>
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+
+// START JAVASCRIPT
+;(function() {;
+var ρσ_modules = {};
+var run, t, theta, phi, theta_dot, phi_dot, L, m;
+ρσ_modules.pythonize = {};
+
+(function(){
+    function strings() {
+        var string_funcs, exclude, name;
+        string_funcs = set("capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase center count endswith startswith find rfind index rindex format join ljust rjust partition rpartition replace split rsplit splitlines zfill".split(" "));
+        if (!arguments.length) {
+            exclude = (function(){
+                var s = ρσ_set();
+                s.jsset.add("split");
+                s.jsset.add("replace");
+                return s;
+            })();
+        } else if (arguments[0]) {
+            exclude = Array.prototype.slice.call(arguments);
+        } else {
+            exclude = null;
+        }
+        if (exclude) {
+            string_funcs = string_funcs.difference(set(exclude));
+        }
+        var ρσ_Iter0 = string_funcs;
+        ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+        for (var ρσ_Index0 of ρσ_Iter0) {
+            name = ρσ_Index0;
+            (ρσ_expr_temp = String.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = (ρσ_expr_temp = ρσ_str.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+        }
+    };
+    if (!strings.__module__) Object.defineProperties(strings, {
+        __module__ : {value: "pythonize"}
+    });
+
+    ρσ_modules.pythonize.strings = strings;
+})();
+async function __main__() {
+"use strict";
+    var display = canvas;
+    var scene = canvas();
+
+    function round(num, n=0) {return Number(num.toFixed(n))}
+
+    var version, print, arange, __name__, type, ρσ_ls, g, ell, dt, L, m, theta, phi, theta_dot, phi_dot, t, run, pivot, bob, rod, floor, shadow, s_L, s_theta, s_m, L_label, theta_label, m_label, warning_label, warning_label1, warning_label2, theta_double_dot;
+    version = ρσ_list_decorate([ "3.2", "glowscript" ]);
+    Array.prototype['+'] = function(r) {return this.concat(r)}
+    Array.prototype['*'] = function(r) {return __array_times_number(this, r)}
+    window.__GSlang = "vpython";
+    print = GSprint;
+    arange = range;
+    __name__ = "__main__";
+    type = pytype;
+    var strings = ρσ_modules.pythonize.strings;
+
+    strings();
+    "4";
+    scene.title = "Péndulo esférico \nAjustar parámetros y presionar 'Iniciar Simulación'";
+    "5";
+    scene.width = 900;
+    "6";
+    scene.height = 700;
+    "7";
+    scene.background = color.black["*"](.9);
+    "8";
+    scene.userzoom = false;
+    "9";
+    scene.userspin = false;
+    "10";
+    scene.userpan = false;
+    (await sleep(.1));
+    "11";
+    scene.autoscale = false;
+    "16";
+    g = 9.81;
+    "17";
+    ell = 1;
+    "18";
+    dt = .001;
+    "23";
+    L = 0;
+    "24";
+    m = 1;
+    "25";
+    theta = pi;
+    "26";
+    phi = 0;
+    "27";
+    theta_dot = 0;
+    "28";
+    phi_dot = 0;
+    "29";
+    t = 0;
+    "30";
+    run = false;
+    "35";
+    pivot = vector(0, 0, 0);
+    "36";
+    bob = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({radius: .06, color: color.yellow, make_trail: true, trail_color: color.yellow, trail_radius: .015, retain: 2e3})]);
+    "37";
+    rod = ρσ_interpolate_kwargs.call(this, cylinder, [ρσ_desugar_kwargs({pos: pivot, radius: .01, color: color.white})]);
+    "39";
+    floor = ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vector(0, 0, 1["-u"]()["*"](1.1)), size: vector(4, 4, .05), color: color.green, opacity: .5})]);
+    "40";
+    shadow = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({radius: .06, color: color.black, opacity: .3, make_trail: false})]);
+    "44";
+    scene.camera.pos = vector(1, 1, 1);
+    "45";
+    scene.camera.axis = vector(1["-u"]()["*"](1.2), 1["-u"]()["*"](1.2), 1["-u"]()["*"](1.2));
+    "46";
+    scene.up = vector(0, 0, 1);
+    "47";
+    scene.center = vector(0, 0, 0);
+    "52";
+    async function theta_ddot(theta, phi_dot) {
+        "53";
+        return Math.pow(phi_dot, 2)["*"](ell)["*"](sin(theta))["*"](cos(theta))["+"](g["*"](sin(theta)));
+    };
+    if (!theta_ddot.__argnames__) Object.defineProperties(theta_ddot, {
+        __argnames__ : {value: ["theta", "phi_dot"]},
+        __module__ : {value: null}
+    });
+
+    "58";
+    async function vista_superior(b) {
+        "59";
+        scene.camera.pos = vector(0, 0, 2.2);
+        "60";
+        scene.camera.axis = vector(0, 0, 1["-u"]()["*"](1));
+        "61";
+        scene.up = vector(0, 1, 0);
+    };
+    if (!vista_superior.__argnames__) Object.defineProperties(vista_superior, {
+        __argnames__ : {value: ["b"]},
+        __module__ : {value: null}
+    });
+
+    "63";
+    async function vista_frontal(b) {
+        "64";
+        scene.camera.pos = vector(0, 2, 1["-u"]()["*"](.5));
+        "65";
+        scene.camera.axis = vector(0, 1["-u"]()["*"](1), 0);
+        "66";
+        scene.up = vector(0, 0, 1);
+    };
+    if (!vista_frontal.__argnames__) Object.defineProperties(vista_frontal, {
+        __argnames__ : {value: ["b"]},
+        __module__ : {value: null}
+    });
+
+    "68";
+    async function vista_cenital(b) {
+        "69";
+        scene.camera.pos = vector(1.2, 1.2, 1.2);
+        "70";
+        scene.camera.axis = vector(1["-u"]()["*"](1.5), 1["-u"]()["*"](1.5), 1["-u"]()["*"](1.5));
+        "71";
+        scene.up = vector(0, 0, 1);
+    };
+    if (!vista_cenital.__argnames__) Object.defineProperties(vista_cenital, {
+        __argnames__ : {value: ["b"]},
+        __module__ : {value: null}
+    });
+
+    "76";
+    scene.append_to_caption("     ");
+    "77";
+    ρσ_interpolate_kwargs.call(this, button, [ρσ_desugar_kwargs({text: "Vista superior", bind: vista_superior})]);
+    "78";
+    scene.append_to_caption("     ");
+    "79";
+    ρσ_interpolate_kwargs.call(this, button, [ρσ_desugar_kwargs({text: "Vista frontal", bind: vista_frontal})]);
+    "80";
+    scene.append_to_caption("     ");
+    "81";
+    ρσ_interpolate_kwargs.call(this, button, [ρσ_desugar_kwargs({text: "Vista cenital", bind: vista_cenital})]);
+    "86";
+    async function dummy(val) {
+    };
+    if (!dummy.__argnames__) Object.defineProperties(dummy, {
+        __argnames__ : {value: ["val"]},
+        __module__ : {value: null}
+    });
+
+    "88";
+    scene.append_to_caption("\nL: ");
+    "89";
+    s_L = ρσ_interpolate_kwargs.call(this, slider, [ρσ_desugar_kwargs({min: 0, max: 5, value: 1, step: .1, length: 300, bind: dummy})]);
+    "90";
+    scene.append_to_caption(" kg·m²/s\n");
+    "92";
+    scene.append_to_caption("θ₀ (°): ");
+    "93";
+    s_theta = ρσ_interpolate_kwargs.call(this, slider, [ρσ_desugar_kwargs({min: 0, max: 180, value: 45, step: 1, length: 300, bind: dummy})]);
+    "94";
+    scene.append_to_caption("°\n");
+    "96";
+    scene.append_to_caption("m: ");
+    "97";
+    s_m = ρσ_interpolate_kwargs.call(this, slider, [ρσ_desugar_kwargs({min: .1, max: 5, value: 1, step: .1, length: 300, bind: dummy})]);
+    "98";
+    scene.append_to_caption(" kg\n");
+    "101";
+    L_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(1["-u"]()["*"](16), 1["-u"]()["*"](3), 1["-u"]()["*"](1)), text: "L = "["+"](ρσ_str.format("{:.1f}", s_L.value))["+"](""), height: 20, box: true, color: color.white, opacity: .7})]);
+    "102";
+    theta_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(1["-u"]()["*"](17), 1["-u"]()["*"](3), 1["-u"]()["*"](3)), text: "θ₀ = "["+"](ρσ_str.format("{:.1f}", s_theta.value))["+"]("°"), height: 20, box: true, color: color.white, opacity: .7})]);
+    "103";
+    m_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(1["-u"]()["*"](18), 1["-u"]()["*"](3), 1["-u"]()["*"](5)), text: "m = "["+"](ρσ_str.format("{:.1f}", s_m.value))["+"](" kg"), height: 20, box: true, color: color.white, opacity: .7})]);
+    "106";
+    warning_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(0, 0, 2), text: "", height: 20, color: color.red, box: false, opacity: 0})]);
+    "108";
+    warning_label1 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(0, 0, 0), text: "", height: 20, color: color.red, box: false, opacity: 0})]);
+    "110";
+    warning_label2 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vector(0, 0, 2), text: "", height: 20, color: color.red, box: false, opacity: 0})]);
+    "115";
+    async function iniciar(b) {
+        "116";
+        "117";
+        run = true;
+        "118";
+        t = 0;
+        "120";
+        L = s_L.value;
+        "121";
+        theta = (await radians(s_theta.value))["+"](pi);
+        "122";
+        phi = 0;
+        "123";
+        theta_dot = 0;
+        "124";
+        m = s_m.value;
+        "127";
+        if ((abs(theta)["<"](1e-6) || abs(theta["-"](1["*"](pi)))["<"](1e-6)) && (L !== 0 && (typeof L !== "object" || ρσ_not_equals(L, 0)))) {
+            "128";
+            warning_label.text = "⚠ No es posible iniciar con θ = 0 o π y L ≠ 0";
+            "129";
+            warning_label1.text = "⚠ No es posible iniciar con θ = 0 o π y L ≠ 0";
+            "130";
+            warning_label2.text = "⚠ No es posible iniciar con θ = 0 o π y L ≠ 0";
+            "131";
+            run = false;
+            "132";
+            return;
+            "133";
+        } else {
+            "134";
+            warning_label.text = "";
+            "135";
+            warning_label1.text = "";
+            "136";
+            warning_label2.text = "";
+            "139";
+        }
+        if (abs(sin(theta))["<"](1e-6)) {
+            "140";
+            phi_dot = 0;
+            "141";
+        } else {
+            "142";
+            phi_dot = L["/"](m["*"](Math.pow(ell, 2))["*"](Math.pow(sin(theta), 2)));
+        }
+        "144";
+        bob.clear_trail();
+        "145";
+        bob.visible = true;
+    };
+    if (!iniciar.__argnames__) Object.defineProperties(iniciar, {
+        __argnames__ : {value: ["b"]},
+        __module__ : {value: null}
+    });
+
+    "147";
+    scene.append_to_caption("\n");
+    "148";
+    ρσ_interpolate_kwargs.call(this, button, [ρσ_desugar_kwargs({text: "Iniciar Simulación", bind: iniciar})]);
+    "153";
+    while (true) {
+        "154";
+        (await rate(1e3));
+        "157";
+        L_label.text = "L = "["+"](ρσ_str.format("{:.1f}", s_L.value))["+"]("");
+        "158";
+        theta_label.text = "θ₀ = "["+"](ρσ_str.format("{:.1f}", s_theta.value))["+"]("°");
+        "159";
+        m_label.text = "m = "["+"](ρσ_str.format("{:.1f}", s_m.value))["+"](" kg");
+        "161";
+        if (run) {
+            "163";
+            theta_double_dot = (await theta_ddot(theta, phi_dot));
+            "166";
+            theta_dot=theta_dot["+"](theta_double_dot["*"](dt));
+            "167";
+            theta=theta["+"](theta_dot["*"](dt));
+            "170";
+            if (abs(theta)["<"](1e-6)) {
+                "171";
+                phi_dot = 0;
+                "172";
+                phi = 0;
+                "173";
+                bob.pos = vector(0, 0, ell);
+                "174";
+            } else if (abs(theta["-"](1["*"](pi)))["<"](1e-6)) {
+                "175";
+                phi_dot = 0;
+                "176";
+                phi = 0;
+                "177";
+                bob.pos = vector(0, 0, 1["-u"]()["*"](ell));
+                "178";
+            } else {
+                "180";
+                phi_dot = L["/"](m["*"](Math.pow(ell, 2))["*"](Math.pow(sin(theta), 2)));
+                "181";
+                phi=phi["+"](phi_dot["*"](dt));
+                "182";
+                bob.pos = vector(ell["*"](sin(theta))["*"](cos(phi)), ell["*"](sin(theta))["*"](sin(phi)), ell["*"](cos(theta)));
+                "185";
+                shadow.pos = vector(bob.pos.x, bob.pos.y, floor.pos.z["+"](floor.size.z["/"](2))["+"](.001));
+            }
+            "189";
+            rod.axis = bob.pos["-"](1["*"](pivot));
+        }
+    }
+};
+if (!__main__.__module__) Object.defineProperties(__main__, {
+    __module__ : {value: null}
+});
+
+;$(function(){ window.__context = { glowscript_container: $("#glowscript").removeAttr("id") }; __main__() })})()
+// END JAVASCRIPT
+
+//--><!]]></script>
+</div>
+</div>
+
